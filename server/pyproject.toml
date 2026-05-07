@@ -1,0 +1,27 @@
+[project]
+name = "server"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "beautifulsoup4>=4.14.3",
+    "fastapi>=0.136.1",
+    "httpx>=0.28.1",
+    "langchain-google-genai>=4.2.2",
+    "langgraph>=1.1.10",
+    "passlib[bcrypt]>=1.7.4",
+    "python-dotenv>=1.2.2",
+    "python-jose[cryptography]>=3.5.0",
+    "requests>=2.33.1",
+    "supabase>=2.30.0",
+    "tavily-python>=0.7.24",
+    "uvicorn>=0.46.0",
+]
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "pytest>=9.0.3",
+    "ruff>=0.15.12",
+]
