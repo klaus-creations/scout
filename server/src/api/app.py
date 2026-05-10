@@ -11,10 +11,9 @@ load_dotenv()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup: pre-build the LangGraph so the first request isn't slow
+    # Preload heavy graph so first request is fast
     from src.graph.graph import research_graph  # noqa: F401
     yield
-    # Shutdown: nothing to clean up for now
 
 
 def create_app() -> FastAPI:
@@ -25,7 +24,6 @@ def create_app() -> FastAPI:
         lifespan=lifespan,
     )
 
-    # --- CORS ---
     allowed_origins = os.getenv(
         "ALLOWED_ORIGINS",
         "http://localhost:3000",
@@ -39,12 +37,10 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
-    # --- Routers ---
     app.include_router(research.router)
     app.include_router(jobs.router)
 
-    # --- Health check ---
-    @app.get("/health", tags=["health"])
+    @app.get("/health")
     async def health():
         return {"status": "ok"}
 
