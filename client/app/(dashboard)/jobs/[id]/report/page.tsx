@@ -25,8 +25,8 @@ export default function ReportPage() {
 
     if (loading) {
         return (
-            <div className="flex justify-center py-24">
-                <Loader2 className="h-6 w-6 animate-spin text-zinc-600" />
+            <div className="flex justify-center py-32">
+                <Loader2 className="h-10 w-10 animate-spin text-primary/40" />
             </div>
         );
     }
@@ -43,12 +43,12 @@ export default function ReportPage() {
     // Render the markdown content as simple HTML-safe paragraphs (no extra deps)
     const renderMarkdown = (md: string) =>
         md.split("\n").map((line, i) => {
-            if (line.startsWith("# ")) return <h1 key={i} className="text-2xl font-bold text-zinc-100 mt-8 mb-3">{line.slice(2)}</h1>;
-            if (line.startsWith("## ")) return <h2 key={i} className="text-lg font-semibold text-zinc-200 mt-6 mb-2">{line.slice(3)}</h2>;
-            if (line.startsWith("### ")) return <h3 key={i} className="font-semibold text-zinc-300 mt-4 mb-1">{line.slice(4)}</h3>;
-            if (line.startsWith("- ")) return <li key={i} className="text-zinc-400 ml-4 list-disc">{line.slice(2)}</li>;
-            if (line.trim() === "") return <div key={i} className="h-2" />;
-            return <p key={i} className="text-zinc-400 leading-7">{line}</p>;
+            if (line.startsWith("# ")) return <h1 key={i} className="text-4xl font-black text-foreground mt-12 mb-6 font-heading tracking-tighter leading-tight border-b pb-4 border-border/40">{line.slice(2)}</h1>;
+            if (line.startsWith("## ")) return <h2 key={i} className="text-2xl font-bold text-foreground mt-10 mb-4 font-heading tracking-tight">{line.slice(3)}</h2>;
+            if (line.startsWith("### ")) return <h3 key={i} className="text-xl font-bold text-foreground/80 mt-8 mb-2 font-heading tracking-tight">{line.slice(4)}</h3>;
+            if (line.startsWith("- ")) return <li key={i} className="text-muted-foreground ml-6 list-disc mb-3 pl-2 leading-relaxed">{line.slice(2)}</li>;
+            if (line.trim() === "") return <div key={i} className="h-6" />;
+            return <p key={i} className="text-muted-foreground leading-8 text-[17px] mb-4 selection:bg-primary/5">{line}</p>;
         });
 
     return (
@@ -58,27 +58,28 @@ export default function ReportPage() {
                 variant="ghost"
                 size="sm"
                 onClick={() => router.back()}
-                className="text-zinc-500 hover:text-zinc-100 -ml-2"
+                className="text-muted-foreground hover:text-foreground -ml-2 transition-colors font-bold"
             >
                 <ArrowLeft className="h-4 w-4 mr-1" /> Back
             </Button>
 
             {/* Header */}
-            <div className="space-y-3">
-                <h1 className="text-3xl font-bold tracking-tight text-zinc-100">{report.title}</h1>
-                <div className="flex items-center gap-3 text-xs text-zinc-500">
-                    <Badge variant="outline" className="text-zinc-400 border-zinc-700">{report.word_count.toLocaleString()} words</Badge>
+            <div className="space-y-6">
+                <h1 className="text-5xl font-black tracking-tighter text-foreground leading-[1.1]">{report.title}</h1>
+                <div className="flex items-center gap-4 text-xs font-bold text-muted-foreground/60 tracking-widest uppercase">
+                    <Badge variant="outline" className="text-primary border-primary/20 bg-primary/5 px-3 py-1 font-black">{report.word_count.toLocaleString()} WORDS</Badge>
                     <span>·</span>
-                    <span>{report.sources.length} sources</span>
+                    <span>{report.sources.length} SOURCES</span>
                     <span>·</span>
                     <span>{new Date(report.created_at).toLocaleDateString()}</span>
                 </div>
-                <div className="rounded-xl border border-purple-500/20 bg-purple-500/5 p-4 text-zinc-400 text-sm leading-6 italic">
+                <div className="rounded-3xl border-2 border-primary/10 bg-primary/5 p-8 text-foreground/80 text-lg leading-relaxed font-medium italic relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-1 h-full bg-primary" />
                     {report.summary}
                 </div>
             </div>
 
-            <Separator className="border-zinc-800" />
+            <Separator className="bg-border/60" />
 
             {/* Body */}
             <article className="space-y-1">
@@ -89,29 +90,29 @@ export default function ReportPage() {
 
             {/* Sources */}
             {report.sources.length > 0 && (
-                <div className="space-y-4">
-                    <h2 className="text-lg font-semibold text-zinc-200 flex items-center gap-2">
-                        <Globe className="h-4 w-4 text-blue-400" /> Sources
+                <div className="space-y-6 pt-10">
+                    <h2 className="text-3xl font-black text-foreground font-heading flex items-center gap-3 tracking-tighter">
+                        <Globe className="h-8 w-8 text-primary" /> Information Sources
                     </h2>
-                    <div className="grid gap-3">
+                    <div className="grid gap-4">
                         {report.sources.map((source, i) => (
                             <a
                                 key={source.id}
                                 href={source.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-start gap-3 rounded-lg border border-zinc-800 bg-zinc-900/40 p-3 hover:border-zinc-600 hover:bg-zinc-900 transition-all group"
+                                className="flex items-start gap-4 rounded-2xl border border-border bg-card p-5 hover:border-primary/40 transition-all group relative overflow-hidden"
                             >
-                                <span className="text-xs text-zinc-600 mt-0.5 font-mono shrink-0">[{i + 1}]</span>
+                                <span className="text-sm text-primary/40 font-black shrink-0 w-8">{(i + 1).toString().padStart(2, '0')}</span>
                                 <div className="flex-1 min-w-0">
-                                    <p className="text-sm text-zinc-300 font-medium truncate group-hover:text-white transition-colors">
+                                    <p className="text-base text-foreground font-bold truncate group-hover:text-primary transition-colors">
                                         {source.title || source.url}
                                     </p>
                                     {source.excerpt && (
-                                        <p className="text-xs text-zinc-600 mt-0.5 line-clamp-2">{source.excerpt}</p>
+                                        <p className="text-sm text-muted-foreground mt-1 line-clamp-2 leading-relaxed">{source.excerpt}</p>
                                     )}
                                 </div>
-                                <ExternalLink className="h-3 w-3 text-zinc-600 shrink-0 mt-0.5 group-hover:text-zinc-400 transition-colors" />
+                                <ExternalLink className="h-4 w-4 text-muted-foreground/30 shrink-0 mt-1 group-hover:text-primary/60 transition-colors" />
                             </a>
                         ))}
                     </div>
