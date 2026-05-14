@@ -153,7 +153,7 @@ export default function ResearchPage() {
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                             placeholder="What would you like to research today?"
-                            className="min-h-48 w-full resize-none border-none bg-transparent text-xl lg:text-3xl p-6 focus-visible:ring-0 placeholder:text-muted-foreground/50 font-medium text-foreground"
+                            className="min-h-48 w-full resize-none border-none bg-transparent text-xl  p-6 focus-visible:ring-0 placeholder:text-muted-foreground/50 font-medium text-foreground"
                             disabled={status === "streaming"}
                         />
                     </div>
