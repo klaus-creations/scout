@@ -99,9 +99,6 @@ export default function ResearchPage() {
         return (
             <div className="flex flex-col gap-24 py-12 lg:py-20 animate-in fade-in duration-1000">
                 <div className="flex flex-col items-center text-center space-y-8">
-                    <Badge variant="outline" className="px-4 py-1 border-primary/20 text-primary bg-primary/10 rounded-full animate-bounce">
-                        v2.0 is now live
-                    </Badge>
                     <h1 className="text-5xl lg:text-7xl font-black tracking-tighter text-foreground leading-[0.9] max-w-4xl">
                         Autonomous <span className="text-primary italic">Intelligence</span> <br />for the Modern Era
                     </h1>
