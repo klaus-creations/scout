@@ -12,7 +12,7 @@ load_dotenv()
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Preload heavy graph so first request is fast
-    from src.graph.graph import research_graph  # noqa: F401
+    from src.graph.graph import research_graph
     yield
 
 
@@ -26,7 +26,7 @@ def create_app() -> FastAPI:
 
     allowed_origins = os.getenv(
         "ALLOWED_ORIGINS",
-        "http://localhost:3000",
+        "https://scout-ai-kl.vercel.app",
     ).split(",")
 
     app.add_middleware(

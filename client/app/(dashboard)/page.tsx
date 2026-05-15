@@ -139,7 +139,7 @@ export default function ResearchPage() {
     return (
         <div className="max-w-5xl mx-auto space-y-4">
             <div className="flex flex-col gap-2">
-                <h1 className="text-4xl lg:text-6xl font-black tracking-tight text-foreground">
+                <h1 className="text-3xl lg:text-4xl font-black tracking-tight text-foreground">
                     AI <span className="text-primary italic">Research</span>
                 </h1>
                 <p className="text-muted-foreground text-lg">Define your objective and let the agents handle the discovery.</p>
