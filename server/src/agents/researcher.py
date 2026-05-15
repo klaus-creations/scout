@@ -11,7 +11,6 @@ from src.graph.state import (
     SourceItem,
 )
 
-YOU_API_KEY = os.getenv("YOU_API_KEY")
 
 DEPTH_TO_RESULTS = {
     "quick": 3,
@@ -27,17 +26,17 @@ async def _search_one(
 
     try:
         headers = {
-            "X-API-Key": YOU_API_KEY,
+            "X-API-Key": os.getenv("YOU_API_KEY"),
         }
 
         params = {
             "query": sub_question,
-            "num_web_results": max_results,
+            "count": max_results,
         }
 
         async with httpx.AsyncClient(timeout=30) as client:
             response = await client.get(
-                "https://api.you.com/search",
+                "https://ydc-index.io/v1/search",
                 headers=headers,
                 params=params,
             )
@@ -49,18 +48,20 @@ async def _search_one(
         findings: list[FindingItem] = []
         sources: list[SourceItem] = []
 
-        # Adjust depending on actual response structure
-        web_results = result.get("hits", []) or result.get("results", [])
+        # Parse You.com v1/search response structure
+        web_results = (
+            result.get("results", {}).get("web", [])
+            if isinstance(result.get("results"), dict)
+            else []
+        )
 
         for r in web_results:
 
             url = r.get("url", "")
             title = r.get("title", "")
-            content = (
-                r.get("snippet")
-                or r.get("description")
-                or r.get("content")
-                or ""
+            snippets = r.get("snippets", [])
+            content = snippets[0] if snippets else (
+                r.get("description") or r.get("content") or ""
             )
 
             source: SourceItem = {

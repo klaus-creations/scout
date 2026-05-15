@@ -4,9 +4,9 @@ from contextlib import asynccontextmanager
 import os
 from dotenv import load_dotenv
 
-from src.api.routes import research, jobs
+load_dotenv()  # Must be called before any module that reads env vars at import time
 
-load_dotenv()
+from src.api.routes import research, jobs
 
 
 @asynccontextmanager
